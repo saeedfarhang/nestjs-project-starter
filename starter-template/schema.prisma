@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt    DateTime? @default(now()) @map("updated_at") @db.Timestamptz(0)
+  deletedAt    DateTime? @map("deleted_at") @db.Timestamptz(0)
+  name         String?   @db.VarChar(255)
+  email        String?   @unique @db.VarChar(255)
+  emailConfirm Boolean   @default(false) @map("email_confirm")
+  password     String    @db.VarChar(255)
+  // Student      Student[]
+
+  @@map("user")
+}
+
+// model Student {
+//   id        Int       @id
+//   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(0)
+//   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamptz(0)
+//   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(0)
+//   birthdate DateTime? @map("birth_date") @db.Timestamptz(0)
+//   balance   Int       @default(0)
+//   user      User      @relation(fields: [id], references: [id], map: "cus_use_id_fk")
+
+// }
+
+model CasbinRule {
+  id    Int     @id @default(autoincrement())
+  ptype String
+  v0    String?
+  v1    String?
+  v2    String?
+  v3    String?
+  v4    String?
+  v5    String?
+
+  @@map("casbin_rule")
+}
